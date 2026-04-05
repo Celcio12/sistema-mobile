@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@theme {
+  --color-theme-bg: var(--theme-bg);
+  --color-theme-card: var(--theme-card);
+  --color-theme-text: var(--theme-text);
+  --color-theme-text-muted: var(--theme-text-muted);
+  --color-theme-border: var(--theme-border);
+  --color-theme-nav: var(--theme-nav);
+}
+
+:root, .light {
+  --theme-bg: #F5F6F8;
+  --theme-card: #FFFFFF;
+  --theme-text: #1A2235;
+  --theme-text-muted: #6B7280;
+  --theme-border: #E5E7EB;
+  --theme-nav: rgba(255, 255, 255, 0.95);
+}
+
+.dark {
+  --theme-bg: #0f172a;
+  --theme-card: #1e293b;
+  --theme-text: #f8fafc;
+  --theme-text-muted: #94a3b8;
+  --theme-border: #334155;
+  --theme-nav: rgba(30, 41, 59, 0.95);
+}
+
+.glass {
+  --theme-bg: transparent;
+  --theme-card: rgba(255, 255, 255, 0.25);
+  --theme-text: #0f172a;
+  --theme-text-muted: #334155;
+  --theme-border: rgba(255, 255, 255, 0.4);
+  --theme-nav: rgba(255, 255, 255, 0.3);
+}
+
+.glass .glass-blur {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
