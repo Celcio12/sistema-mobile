@@ -13,11 +13,12 @@
     "preview": "vite preview",
     "clean": "rm -rf dist",
     "lint": "tsc --noEmit",
-    "doctor": "set NODE_OPTIONS=--dns-result-order=ipv4first && expo-doctor",
-    "sync-assets": "node -e \"const fs = require('fs'); const src='dist'; const dest='android/app/src/main/assets/dist'; if(!fs.existsSync(dest)) fs.mkdirSync(dest, {recursive:true}); fs.cpSync(src, dest, {recursive:true, force: true})\"",
-    "build:android": "npm run build && npm run sync-assets && npx expo export:embed --platform android --dev false --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res"
+    "doctor": "set NODE_OPTIONS=--dns-result-order=ipv4first && expo-doctor"
   },
   "dependencies": {
+    "@capacitor/android": "^8.3.0",
+    "@capacitor/cli": "^8.3.0",
+    "@capacitor/core": "^8.3.0",
     "@google/genai": "^1.29.0",
     "@supabase/supabase-js": "^2.99.2",
     "@tailwindcss/vite": "^4.1.14",

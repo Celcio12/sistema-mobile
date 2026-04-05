@@ -2,6 +2,7 @@
   "expo": {
     "name": "Sistema de Cantina Mobile",
     "slug": "sistema-de-cantina-mobile",
+    "owner": "enetybeat300",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -11,26 +12,38 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
     "ios": {
       "supportsTablet": true
     },
     "android": {
+      "package": "com.celcio12.sistemadecantinamobile",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      },
-      "package": "com.celciopinto.mobile"
+      }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.ico"
     },
     "extra": {
       "eas": {
         "projectId": "74d42ec9-de64-43e7-9f7c-ff8b800a0e2f"
       }
-    }
+    },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "kotlinVersion": "2.2.0"
+          }
+        }
+      ]
+    ],
+    "assetBundlePatterns": [
+      "**/*",
+      "dist/**/*"
+    ]
   }
 }
