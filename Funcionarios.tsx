@@ -1,19 +1,20 @@
+import React from 'react';
 import { Users, Clock, Search, Filter, Loader2, Activity } from 'lucide-react';
 import { useSupabaseTable } from '../../hooks/useSupabaseTable';
 
 export default function Funcionarios() {
-  const { data: funcionarios, loading } = useSupabaseTable<any>('employees');
+  const { data: funcionarios, loading } = useSupabaseTable<any>('funcionarios');
 
-  const isUserOnline = (lastActive: string) => {
-    if (!lastActive) return false;
-    const lastDate = new Date(lastActive);
-    const now = new Date();
-    const diffMs = now.getTime() - lastDate.getTime();
-    return diffMs < 5 * 60 * 1000; // 5 minutos
+  const onlineCount = funcionarios.filter(f => (f.status || '').toLowerCase() === 'online').length;
+  const offlineCount = funcionarios.filter(f => (f.status || '').toLowerCase() !== 'online').length;
+
+  const formatRole = (role: string, gender: string) => {
+    if (!role) return 'Funcionário';
+    if (role.toLowerCase() === 'funcionário' || role.toLowerCase() === 'funcionario') {
+      return gender === 'Feminino' ? 'Funcionária' : 'Funcionário';
+    }
+    return role;
   };
-
-  const onlineCount = funcionarios.filter(f => isUserOnline(f.lastActive)).length;
-  const offlineCount = funcionarios.filter(f => !isUserOnline(f.lastActive)).length;
 
   return (
     <div className="p-4 space-y-4 h-full flex flex-col pb-20">
@@ -67,47 +68,51 @@ export default function Funcionarios() {
           </div>
         ) : (
           funcionarios.map((emp) => {
-            const isOnline = isUserOnline(emp.lastActive);
+            const isOnline = (emp.status || '').toLowerCase() === 'online';
+            const role = formatRole(emp.cargo || emp.role, emp.genero);
             
-            // Format last activity
+            // Format last activity if it's a timestamp
             let lastActivityDate = '';
             let lastActivityTime = '';
-            const rawActivity = emp.lastActive || emp.created_at;
             
+            const rawActivity = emp.ultimo_acesso || emp.lastActive;
             if (rawActivity) {
               try {
                 const dateObj = new Date(rawActivity);
                 if (!isNaN(dateObj.getTime())) {
                   lastActivityDate = dateObj.toLocaleDateString('pt-BR');
                   lastActivityTime = dateObj.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+                } else {
+                  // If it's just a string like "14:30" or "Hoje"
+                  lastActivityTime = rawActivity;
                 }
-              } catch (e) {}
+              } catch (e) {
+                lastActivityTime = rawActivity;
+              }
+            } else {
+              lastActivityTime = 'Desconhecido';
             }
 
             return (
               <div key={emp.id} className="bg-theme-card glass-blur p-4 rounded-3xl shadow-sm border border-theme-border flex items-center justify-between">
                 <div className="flex items-center space-x-3">
                   <div className="relative">
-                    <div className="w-12 h-12 bg-theme-nav rounded-full flex items-center justify-center text-theme-text-muted font-bold text-lg overflow-hidden">
-                      {emp.photo ? (
-                        <img src={emp.photo} className="w-full h-full object-cover" alt="" />
-                      ) : (
-                        (emp.name || '?').charAt(0).toUpperCase()
-                      )}
+                    <div className="w-12 h-12 bg-theme-nav rounded-full flex items-center justify-center text-theme-text-muted font-bold text-lg">
+                      {(emp.nome || emp.name || '?').charAt(0).toUpperCase()}
                     </div>
                     <div className={`absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full border-2 border-theme-card ${isOnline ? 'bg-emerald-500' : 'bg-gray-400'}`} />
                   </div>
                   <div>
-                    <h3 className="font-bold text-theme-text text-sm">{emp.name}</h3>
-                    <span className="text-xs text-theme-text-muted block">{emp.role || 'Funcionário'}</span>
+                    <h3 className="font-bold text-theme-text text-sm">{emp.nome || emp.name}</h3>
+                    <span className="text-xs text-theme-text-muted block">{role}</span>
                     {isOnline ? (
                       <span className="text-[10px] font-bold text-emerald-500 flex items-center mt-1">
-                        <Activity className="w-3 h-3 mr-1" /> Em atividade no sistema
+                        <Activity className="w-3 h-3 mr-1" /> Status: Online
                       </span>
                     ) : (
                       <span className="text-[10px] text-theme-text-muted flex items-center mt-1">
                         <Clock className="w-3 h-3 mr-1" /> 
-                        Última atividade: {lastActivityDate ? `${lastActivityDate} às ${lastActivityTime}` : 'Desconhecida'}
+                        Status: Offline {lastActivityTime !== 'Desconhecido' && `(Visto às ${lastActivityTime})`}
                       </span>
                     )}
                   </div>
