@@ -1,20 +1,24 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Sistema de Cantina Mobile (Android Kotlin Rewrite)
 
-# Run and deploy your AI Studio app
+Este aplicativo foi reescrito para Android nativo (Kotlin + Jetpack Compose) a partir da base original em React/Vite.
+O aplicativo mantém a lógica de negócios central para gerenciar produtos, funcionários e relatórios da cantina, agora otimizado para uma experiência mobile nativa offline.
 
-This contains everything you need to run your app locally.
+## Tecnologias Utilizadas
+- **Kotlin**: Linguagem principal do projeto.
+- **Jetpack Compose**: Para a construção de toda a interface do usuário (UI).
+- **Room Database**: Para armazenamento local persistente dos dados (Vendas, Funcionários, Configurações), garantindo o funcionamento offline.
+- **Coroutines & Flow**: Para assincronicidade e reatividade.
+- **Navigation Compose**: Para a navegação entre as telas.
 
-View your app in AI Studio: https://ai.studio/apps/f92e0b98-eda9-4c58-8e0c-06b2b0f9d9b3
+## Estrutura do Projeto
+- `app/src/main/java/com/aistudio/sistemacantina/MainActivity.kt`: Ponto de entrada do aplicativo e configuração das rotas.
+- `app/src/main/java/com/aistudio/sistemacantina/ui`: Contém a interface do utilizador, ViewModel (gestão de estado) e o tema visual (Material 3).
+- `app/src/main/java/com/aistudio/sistemacantina/data`: Contém o banco de dados Room (Database, Entities, DAO) usado para mock e cache.
+- `app/src/main/res`: Contém os recursos visuais, strings, e ícones do aplicativo.
 
-## Run Locally
-
-**Prerequisites:**  Node.js
-
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## Como Executar
+Este é um projeto Gradle padrão do Android.
+1. Abra o diretório raiz deste projeto no **Android Studio**.
+2. Aguarde a sincronização do Gradle terminar.
+3. Conecte um dispositivo Android ou inicie um Emulador.
+4. Clique no botão de **Run** (Play) no topo para compilar e instalar o APK no seu dispositivo.

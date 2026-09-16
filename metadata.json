@@ -1,5 +1,6 @@
 {
   "name": "Sistema de Cantina Mobile",
-  "description": "",
-  "requestFramePermissions": []
+  "description": "Sistema de gestão de cantina com vendas, funcionários e relatórios",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
